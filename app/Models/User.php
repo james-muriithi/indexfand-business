@@ -15,9 +15,11 @@ use \DateTimeInterface;
 
 class User extends Authenticatable
 {
-    use SoftDeletes, Notifiable, HasApiTokens, HasFactory;
+    use Notifiable, HasApiTokens, HasFactory;
 
     public $table = 'users';
+
+    protected $primaryKey = 'user_id';
 
     protected $hidden = [
         'remember_token',
@@ -25,22 +27,15 @@ class User extends Authenticatable
     ];
 
     protected $dates = [
-        'email_verified_at',
-        'created_at',
-        'updated_at',
-        'deleted_at',
     ];
 
     protected $fillable = [
         'name',
         'mobile',
         'email',
-        'email_verified_at',
+        'verified',
         'password',
-        'remember_token',
-        'created_at',
-        'updated_at',
-        'deleted_at',
+        'token',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
@@ -55,7 +50,7 @@ class User extends Authenticatable
 
     public function userShops()
     {
-        return $this->hasMany(Shop::class, 'user_id', 'id');
+        return $this->hasMany(Shop::class, 'user_id', 'user_id');
     }
 
     public function getEmailVerifiedAtAttribute($value)
@@ -82,6 +77,6 @@ class User extends Authenticatable
 
     public function roles()
     {
-        return $this->belongsToMany(Role::class);
+        return $this->belongsToMany(Role::class, null,'user_id','');
     }
 }

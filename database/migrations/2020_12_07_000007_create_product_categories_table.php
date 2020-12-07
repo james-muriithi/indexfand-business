@@ -16,4 +16,9 @@ class CreateProductCategoriesTable extends Migration
             $table->softDeletes();
         });
     }
+
+    public function down()
+    {
+        Schema::dropIfExists('product_categories');
+    }
 }

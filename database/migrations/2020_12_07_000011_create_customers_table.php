@@ -18,4 +18,9 @@ class CreateCustomersTable extends Migration
             $table->softDeletes();
         });
     }
+
+    public function down()
+    {
+        Schema::dropIfExists('customers');
+    }
 }

@@ -9,8 +9,8 @@ class AddRelationshipFieldsToProductsTable extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->unsignedBigInteger('created_by_id')->nullable();
-            $table->foreign('created_by_id', 'created_by_fk_2723395')->references('id')->on('users');
+            $table->integer('created_by_id')->nullable();
+            $table->foreign('created_by_id', 'created_by_fk_2723395')->references('user_id')->on('users');
         });
     }
 }

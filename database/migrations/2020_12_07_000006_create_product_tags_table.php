@@ -15,4 +15,9 @@ class CreateProductTagsTable extends Migration
             $table->softDeletes();
         });
     }
+
+    public function down()
+    {
+        Schema::dropIfExists('product_tags');
+    }
 }

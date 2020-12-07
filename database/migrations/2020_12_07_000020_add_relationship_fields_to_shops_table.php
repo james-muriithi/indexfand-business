@@ -9,8 +9,8 @@ class AddRelationshipFieldsToShopsTable extends Migration
     public function up()
     {
         Schema::table('shops', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id', 'user_fk_2744402')->references('id')->on('users');
+            $table->integer('user_id');
+            $table->foreign('user_id', 'user_fk_2744402')->references('user_id')->on('users');
         });
     }
 }

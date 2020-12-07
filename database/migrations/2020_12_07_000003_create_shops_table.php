@@ -19,4 +19,9 @@ class CreateShopsTable extends Migration
             $table->softDeletes();
         });
     }
+
+    public function down()
+    {
+        Schema::dropIfExists('shops');
+    }
 }
