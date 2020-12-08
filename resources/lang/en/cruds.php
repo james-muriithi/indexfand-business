@@ -141,6 +141,8 @@ return [
             'status_helper'      => ' ',
             'quantity'           => 'Quantity',
             'quantity_helper'    => ' ',
+            'shop'               => 'Shop',
+            'shop_helper'        => ' ',
         ],
     ],
     'auditLog'           => [
@@ -217,6 +219,8 @@ return [
             'short_name_helper'  => ' ',
             'user'               => 'User',
             'user_helper'        => ' ',
+            'products'           => 'Products',
+            'products_helper'   => ' ',
         ],
     ],
     'customerManagement' => [

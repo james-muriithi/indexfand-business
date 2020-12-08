@@ -18,7 +18,7 @@ class StoreShopRequest extends FormRequest
     {
         return [
             'user_id'     => [
-                'required',
+                'optional',
                 'integer',
             ],
             'shop_name'   => [

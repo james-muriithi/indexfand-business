@@ -9,20 +9,22 @@
     <div class="card-body">
         <form method="POST" action="{{ route("admin.shops.store") }}" enctype="multipart/form-data">
             @csrf
-            <div class="form-group">
-                <label class="required" for="user_id">{{ trans('cruds.shop.fields.user') }}</label>
-                <select class="form-control select2 {{ $errors->has('user') ? 'is-invalid' : '' }}" name="user_id" id="user_id" required>
-                    @foreach($users as $id => $user)
-                        <option value="{{ $id }}" {{ old('user_id') == $id ? 'selected' : '' }}>{{ $user }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('user'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('user') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.shop.fields.user_helper') }}</span>
-            </div>
+            @if(Auth::user()->getIsAdminAttribute())
+                <div class="form-group">
+                    <label class="required" for="user_id">{{ trans('cruds.shop.fields.user') }}</label>
+                    <select class="form-control select2 {{ $errors->has('user') ? 'is-invalid' : '' }}" name="user_id" id="user_id" required>
+                        @foreach($users as $id => $user)
+                            <option value="{{ $id }}" {{ old('user_id') == $id ? 'selected' : '' }}>{{ $user }}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('user'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('user') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.shop.fields.user_helper') }}</span>
+                </div>
+            @endif
             <div class="form-group">
                 <label class="required" for="shop_name">{{ trans('cruds.shop.fields.shop_name') }}</label>
                 <input class="form-control {{ $errors->has('shop_name') ? 'is-invalid' : '' }}" type="text" name="shop_name" id="shop_name" value="{{ old('shop_name', '') }}" required>

@@ -10,8 +10,10 @@ use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\ProductTag;
+use App\Models\Shop;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -23,7 +25,11 @@ class ProductController extends Controller
     {
         abort_if(Gate::denies('product_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $products = Product::with(['categories', 'tags', 'created_by', 'media'])->get();
+        $products = Auth::user()->userShops()->with(['shopProducts'])->get()->pluck('shopProducts')->flatten();
+
+        if (Auth::user()->getIsAdminAttribute()){
+            $products = Product::with(['categories', 'tags', 'shop', 'created_by', 'media'])->get();
+        }
 
         return view('admin.products.index', compact('products'));
     }
@@ -36,7 +42,9 @@ class ProductController extends Controller
 
         $tags = ProductTag::all()->pluck('name', 'id');
 
-        return view('admin.products.create', compact('categories', 'tags'));
+        $shops = Shop::all()->pluck('shop_name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.products.create', compact('categories', 'tags', 'shops'));
     }
 
     public function store(StoreProductRequest $request)
@@ -64,9 +72,11 @@ class ProductController extends Controller
 
         $tags = ProductTag::all()->pluck('name', 'id');
 
-        $product->load('categories', 'tags', 'created_by');
+        $shops = Shop::all()->pluck('shop_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.products.edit', compact('categories', 'tags', 'product'));
+        $product->load('categories', 'tags', 'shop', 'created_by');
+
+        return view('admin.products.edit', compact('categories', 'tags', 'shops', 'product'));
     }
 
     public function update(UpdateProductRequest $request, Product $product)
@@ -98,7 +108,7 @@ class ProductController extends Controller
     {
         abort_if(Gate::denies('product_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $product->load('categories', 'tags', 'created_by');
+        $product->load('categories', 'tags', 'shop', 'created_by');
 
         return view('admin.products.show', compact('product'));
     }

@@ -25,14 +25,19 @@
                         <th>
                             {{ trans('cruds.shop.fields.id') }}
                         </th>
-                        <th>
-                            {{ trans('cruds.shop.fields.user') }}
-                        </th>
+                        @if(Auth::user()->getIsAdminAttribute())
+                            <th>
+                                {{ trans('cruds.shop.fields.user') }}
+                            </th>
+                        @endif
                         <th>
                             {{ trans('cruds.shop.fields.shop_name') }}
                         </th>
                         <th>
                             {{ trans('cruds.shop.fields.short_name') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.shop.fields.products') }}
                         </th>
                         <th>
                             {{ trans('cruds.shop.fields.location') }}
@@ -57,14 +62,19 @@
                             <td>
                                 {{ $shop->id ?? '' }}
                             </td>
-                            <td>
-                                {{ $shop->user->name ?? '' }}
-                            </td>
+                            @if(Auth::user()->getIsAdminAttribute())
+                                <td>
+                                    {{ $shop->user->name ?? '' }}
+                                </td>
+                            @endif
                             <td>
                                 {{ $shop->shop_name ?? '' }}
                             </td>
                             <td>
                                 {{ $shop->short_name ?? '' }}
+                            </td>
+                            <td>
+                                {{ count($shop->shopProducts) }}
                             </td>
                             <td>
                                 {{ $shop->location ?? '' }}
@@ -154,7 +164,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>

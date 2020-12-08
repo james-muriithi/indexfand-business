@@ -33,6 +33,7 @@ class Product extends Model implements HasMedia
         'price',
         'quantity',
         'status',
+        'shop_id',
         'description',
         'created_at',
         'updated_at',
@@ -43,6 +44,11 @@ class Product extends Model implements HasMedia
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
+    }
+
+    public function shop()
+    {
+        return $this->belongsTo(Shop::class, 'shop_id');
     }
 
     public function registerMediaConversions(Media $media = null): void

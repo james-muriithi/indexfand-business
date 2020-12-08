@@ -33,6 +33,9 @@
                             {{ trans('cruds.customer.fields.location') }}
                         </th>
                         <th>
+                            {{ trans('cruds.customer.fields.created_at') }}
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -60,6 +63,9 @@
                             </td>
                             <td>
                                 {{ $order->cutomer->location ?? '' }}
+                            </td>
+                            <td>
+                                {{ $order->cutomer->created_at ?? '' }}
                             </td>
                             <td>
                                 @can('order_show')
@@ -140,7 +146,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>
