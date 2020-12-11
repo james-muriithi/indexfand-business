@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Facades\Auth;
 use LaravelDaily\LaravelCharts\Classes\LaravelChart;
 
 class HomeController
@@ -26,32 +27,62 @@ class HomeController
         $settings1['total_number'] = 0;
 
         if (class_exists($settings1['model'])) {
-            $settings1['total_number'] = $settings1['model']::when(isset($settings1['filter_field']), function ($query) use ($settings1) {
-                if (isset($settings1['filter_days'])) {
-                    return $query->where(
-                        $settings1['filter_field'],
-                        '>=',
-                        now()->subDays($settings1['filter_days'])->format('Y-m-d')
-                    );
-                } else if (isset($settings1['filter_period'])) {
-                    switch ($settings1['filter_period']) {
-                        case 'week':
-                            $start  = date('Y-m-d', strtotime('last Monday'));
-                            break;
-                        case 'month':
-                            $start = date('Y-m') . '-01';
-                            break;
-                        case 'year':
-                            $start  = date('Y') . '-01-01';
-                            break;
-                    }
+            $userShops = Auth::user()->userShops()->pluck('id');
+            if (Auth::user()->getIsAdminAttribute()){
+                $settings1['total_number'] = $settings1['model']::whereIn('shop_id', $userShops)->when(isset($settings1['filter_field']), function ($query) use ($settings1) {
+                    if (isset($settings1['filter_days'])) {
+                        return $query->where(
+                            $settings1['filter_field'],
+                            '>=',
+                            now()->subDays($settings1['filter_days'])->format('Y-m-d')
+                        );
+                    } else if (isset($settings1['filter_period'])) {
+                        switch ($settings1['filter_period']) {
+                            case 'week':
+                                $start  = date('Y-m-d', strtotime('last Monday'));
+                                break;
+                            case 'month':
+                                $start = date('Y-m') . '-01';
+                                break;
+                            case 'year':
+                                $start  = date('Y') . '-01-01';
+                                break;
+                        }
 
-                    if (isset($start)) {
-                        return $query->where($settings1['filter_field'], '>=', $start);
+                        if (isset($start)) {
+                            return $query->where($settings1['filter_field'], '>=', $start);
+                        }
                     }
-                }
-            })
-                ->{$settings1['aggregate_function'] ?? 'count'}($settings1['aggregate_field'] ?? '*');
+                })
+                    ->{$settings1['aggregate_function'] ?? 'count'}($settings1['aggregate_field'] ?? '*');
+            }else{
+                $settings1['total_number'] = $settings1['model']::when(isset($settings1['filter_field']), function ($query) use ($settings1) {
+                    if (isset($settings1['filter_days'])) {
+                        return $query->where(
+                            $settings1['filter_field'],
+                            '>=',
+                            now()->subDays($settings1['filter_days'])->format('Y-m-d')
+                        );
+                    } else if (isset($settings1['filter_period'])) {
+                        switch ($settings1['filter_period']) {
+                            case 'week':
+                                $start  = date('Y-m-d', strtotime('last Monday'));
+                                break;
+                            case 'month':
+                                $start = date('Y-m') . '-01';
+                                break;
+                            case 'year':
+                                $start  = date('Y') . '-01-01';
+                                break;
+                        }
+
+                        if (isset($start)) {
+                            return $query->where($settings1['filter_field'], '>=', $start);
+                        }
+                    }
+                })
+                    ->{$settings1['aggregate_function'] ?? 'count'}($settings1['aggregate_field'] ?? '*');
+            }
         }
 
         $settings2 = [

@@ -26,6 +26,11 @@ class OrdersApiController extends Controller
         return new OrderResource($order->load(['cutomer']));
     }
 
+    public function store(Request $request)
+    {
+        return $request;
+    }
+
     public function update(UpdateOrderRequest $request, Order $order)
     {
         $order->update($request->all());

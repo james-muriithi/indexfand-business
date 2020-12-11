@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', 'middleware' => ['auth:api']], function () {
+Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', 'middleware' => []], function () {
     // Permissions
     Route::apiResource('permissions', 'PermissionsApiController');
 
@@ -22,11 +22,11 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     Route::apiResource('products', 'ProductApiController');
 
     // Orders
-    Route::apiResource('orders', 'OrdersApiController', ['except' => ['store']]);
+    Route::apiResource('orders', 'OrdersApiController', ['except' => ['create']]);
 
     // Shops
     Route::apiResource('shops', 'ShopApiController');
 
     // Customers
-    Route::apiResource('customers', 'CustomerApiController', ['except' => ['store']]);
+    Route::apiResource('customers', 'CustomerApiController', ['except' => ['create']]);
 });
