@@ -39,7 +39,7 @@
                 <i class="fas fa-fw fa-bars"></i>
             </button>
 
-            <ul class="c-header-nav ml-auto">
+            <ul class="c-header-nav ml-auto mr-1">
                 @if(count(config('panel.available_languages', [])) > 1)
                     <li class="c-header-nav-item dropdown d-md-down-none">
                         <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
@@ -53,6 +53,57 @@
                     </li>
                 @endif
 
+                    <li class="c-header-nav-item dropdown d-md-down-none mx-2"><a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                            <img src="{{asset('images/illustrations/notification-bell.svg')}}" alt="" width="20" height="20">
+                            <span class="badge badge-pill badge-info">2</span></a>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg pt-0">
+                            <div class="dropdown-header bg-light"><strong>You have 4 notifications</strong></div><a class="dropdown-item" href="#">
+                                <div class="message">
+                                    <div class="py-3 mfe-3 float-left">
+                                        <div class="c-avatar">
+                                            <img class="img-thumbnail bg-transparent border-0" src="{{asset('images/illustrations/shopping-bag.svg')}}" alt="">
+                                        </div>
+                                    </div>
+                                    <div><small class="text-muted">New Order</small><small class="text-muted float-right mt-1">Just now</small></div>
+                                    <div class="text-truncate font-weight-bold" >John Doe</div>
+                                    <div class="small text-muted text-truncate">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</div>
+                                </div>
+                            </a>
+                            <a class="dropdown-item" href="#">
+                                <div class="message">
+                                    <div class="py-3 mfe-3 float-left">
+                                        <div class="c-avatar">
+                                            <img class="img-thumbnail bg-transparent border-0" src="{{asset('images/illustrations/alert.svg')}}" alt="">
+                                        </div>
+                                    </div>
+                                    <div><small class="text-muted">John Doe</small><small class="text-muted float-right mt-1">5 minutes ago</small></div>
+                                    <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
+                                    <div class="small text-muted text-truncate">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</div>
+                                </div>
+                            </a>
+                            <a class="dropdown-item text-center border-top" href="#"><strong>View all notifications</strong></a>
+                        </div>
+                    </li>
+
+                <li class="c-header-nav-item dropdown">
+                    <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                        <div class="c-avatar">
+                            <img class="c-avatar-img" src="{{asset('images/avatars/avatar.png')}}" alt="{{Auth::user()->email}}">
+                        </div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right pt-0">
+                        <div class="dropdown-header bg-light py-2"><strong>Account</strong></div>
+                        <a class="dropdown-item" href="#">
+                            <img src="{{asset('images/illustrations/user.svg')}}" alt="" width="16" height="16" class="mr-1">
+                            Profile
+                        </a>
+
+                        <a class="dropdown-item" href="#" class="c-sidebar-nav-link" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
+                            <img src="{{asset('images/illustrations/exit.svg')}}" alt="" width="16" height="16" class="mr-1">
+                            Logout
+                        </a>
+                    </div>
+                </li>
 
             </ul>
         </header>

@@ -161,6 +161,11 @@ table.dataTable thead .sorting_desc {
 .login.login-1.login-forgot-on .login-forgot {
     display: block; }
 
+/*new styles*/
+.dropdown-menu {display: block;visibility: hidden;opacity:0;transform: translateY(50px);transition:.5s ease all;}
+.dropdown-menu.show {display: block;visibility: visible;opacity:1;transform: translateY(0px);transition:.5s ease all;}
+
+
 @media (min-width: 992px) {
     .login.login-1 .login-aside {
         width: 100%;
