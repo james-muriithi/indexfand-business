@@ -24,6 +24,8 @@ class User extends Authenticatable
     protected $hidden = [
         'remember_token',
         'password',
+        'otp',
+        'token'
     ];
 
     protected $dates = [
@@ -37,6 +39,12 @@ class User extends Authenticatable
         'password',
         'token',
     ];
+
+    public function findForPassport($username)
+    {
+        $username = preg_replace('/^(0|254)/', '+254', $username);
+        return $this->where('mobile', $username)->first();
+    }
 
     protected function serializeDate(DateTimeInterface $date)
     {

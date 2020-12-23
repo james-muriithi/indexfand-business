@@ -50,6 +50,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Shops
     Route::delete('shops/destroy', 'ShopController@massDestroy')->name('shops.massDestroy');
+    Route::post('shops/media', 'ShopController@storeMedia')->name('shops.storeMedia');
+    Route::post('shops/ckmedia', 'ShopController@storeCKEditorImages')->name('shops.storeCKEditorImages');
     Route::resource('shops', 'ShopController');
 
     // Customers

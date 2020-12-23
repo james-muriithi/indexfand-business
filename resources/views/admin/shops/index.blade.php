@@ -25,6 +25,9 @@
                         <th>
                             {{ trans('cruds.shop.fields.id') }}
                         </th>
+                        <th>
+                            {{ trans('cruds.product.fields.photo') }}
+                        </th>
                         @if(Auth::user()->getIsAdminAttribute())
                             <th>
                                 {{ trans('cruds.shop.fields.user') }}
@@ -61,6 +64,13 @@
                             </td>
                             <td>
                                 {{ $shop->id ?? '' }}
+                            </td>
+                            <td>
+                                @if($shop->photo)
+                                    <a href="{{ $shop->photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                        <img src="{{ $shop->photo->getUrl('thumb') }}">
+                                    </a>
+                                @endif
                             </td>
                             @if(Auth::user()->getIsAdminAttribute())
                                 <td>

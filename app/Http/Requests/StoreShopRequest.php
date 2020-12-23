@@ -29,8 +29,9 @@ class StoreShopRequest extends FormRequest
             'short_name'  => [
                 'string',
                 'min:2',
-                'max:10',
+                'max:15',
                 'required',
+                'unique:shops,short_name',
             ],
             'location'    => [
                 'string',
@@ -45,6 +46,13 @@ class StoreShopRequest extends FormRequest
                 'max:1000',
                 'nullable',
             ],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'short_name.unique' => 'The Shop short name is already taken',
         ];
     }
 }

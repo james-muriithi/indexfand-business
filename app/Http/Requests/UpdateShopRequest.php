@@ -18,7 +18,7 @@ class UpdateShopRequest extends FormRequest
     {
         return [
             'user_id'     => [
-                'required',
+                'optional',
                 'integer',
             ],
             'shop_name'   => [
@@ -31,6 +31,7 @@ class UpdateShopRequest extends FormRequest
                 'min:2',
                 'max:10',
                 'required',
+                'unique:shops,short_name,'.$this->shop->id,
             ],
             'location'    => [
                 'string',
