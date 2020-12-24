@@ -52,35 +52,42 @@
                         </div>
                     </li>
                 @endif
+                @php($notifications = Auth::user()->unreadNotifications)
 
                     <li class="c-header-nav-item dropdown d-md-down-none mx-2"><a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                             <img src="{{asset('images/illustrations/notification-bell.svg')}}" alt="" width="20" height="20">
-                            <span class="badge badge-pill badge-info">2</span></a>
+                            <span class="badge badge-pill badge-info">{{count($notifications)}}</span></a>
                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg pt-0">
-                            <div class="dropdown-header bg-light"><strong>You have 4 notifications</strong></div><a class="dropdown-item" href="#">
-                                <div class="message">
-                                    <div class="py-3 mfe-3 float-left">
-                                        <div class="c-avatar">
-                                            <img class="img-thumbnail bg-transparent border-0" src="{{asset('images/illustrations/shopping-bag.svg')}}" alt="">
+                            <div class="dropdown-header bg-light"><strong>You have {{count($notifications)}} notifications</strong></div>
+                            @foreach($notifications as $notification)
+                                @if($notification->type == 'App\Notifications\OrderCreated')
+                                    <a class="dropdown-item" href="#">
+                                        <div class="message w-100">
+                                            <div class="py-3 mfe-3 float-left">
+                                                <div class="c-avatar">
+                                                    <img class="img-thumbnail bg-transparent border-0" src="{{asset('images/illustrations/shopping-bag.svg')}}" alt="">
+                                                </div>
+                                            </div>
+                                            <div><small class="text-muted">New Order</small><small class="text-muted float-right mt-1">{{$notification->created_at->diffForHumans()}}</small></div>
+                                            @php($order = \App\Models\Order::find($notification->data['order_id']))
+                                            <div class="text-truncate font-weight-bold" >{{$order->customer->name}} {{$order->customer->mobile}}</div>
+                                            <div class="small text-muted text-truncate">Order Total: Ksh{{$order->total}}</div>
                                         </div>
-                                    </div>
-                                    <div><small class="text-muted">New Order</small><small class="text-muted float-right mt-1">Just now</small></div>
-                                    <div class="text-truncate font-weight-bold" >John Doe</div>
-                                    <div class="small text-muted text-truncate">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</div>
-                                </div>
-                            </a>
-                            <a class="dropdown-item" href="#">
-                                <div class="message">
-                                    <div class="py-3 mfe-3 float-left">
-                                        <div class="c-avatar">
-                                            <img class="img-thumbnail bg-transparent border-0" src="{{asset('images/illustrations/alert.svg')}}" alt="">
-                                        </div>
-                                    </div>
-                                    <div><small class="text-muted">John Doe</small><small class="text-muted float-right mt-1">5 minutes ago</small></div>
-                                    <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
-                                    <div class="small text-muted text-truncate">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</div>
-                                </div>
-                            </a>
+                                    </a>
+                                @endif
+                            @endforeach
+{{--                            <a class="dropdown-item" href="#">--}}
+{{--                                <div class="message">--}}
+{{--                                    <div class="py-3 mfe-3 float-left">--}}
+{{--                                        <div class="c-avatar">--}}
+{{--                                            <img class="img-thumbnail bg-transparent border-0" src="{{asset('images/illustrations/alert.svg')}}" alt="">--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                    <div><small class="text-muted">John Doe</small><small class="text-muted float-right mt-1">5 minutes ago</small></div>--}}
+{{--                                    <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>--}}
+{{--                                    <div class="small text-muted text-truncate">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</div>--}}
+{{--                                </div>--}}
+{{--                            </a>--}}
                             <a class="dropdown-item text-center border-top" href="#"><strong>View all notifications</strong></a>
                         </div>
                     </li>

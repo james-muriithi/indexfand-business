@@ -21,7 +21,7 @@
                             {{ trans('cruds.order.fields.status') }}
                         </th>
                         <th>
-                            {{ trans('cruds.order.fields.cutomer') }}
+                            {{ trans('cruds.order.fields.customer') }}
                         </th>
                         <th>
                             {{ trans('cruds.customer.fields.mobile') }}
@@ -53,19 +53,19 @@
                                 {{ $order->status ?? '' }}
                             </td>
                             <td>
-                                {{ $order->cutomer->name ?? '' }}
+                                {{ $order->customer->name ?? '' }}
                             </td>
                             <td>
-                                {{ $order->cutomer->mobile ?? '' }}
+                                {{ $order->customer->mobile ?? '' }}
                             </td>
                             <td>
-                                {{ $order->cutomer->email ?? '' }}
+                                {{ $order->customer->email ?? '' }}
                             </td>
                             <td>
-                                {{ $order->cutomer->location ?? '' }}
+                                {{ $order->customer->location ?? '' }}
                             </td>
                             <td>
-                                {{ $order->cutomer->created_at ?? '' }}
+                                {{ $order->customer->created_at ?? '' }}
                             </td>
                             <td>
                                 @can('order_show')

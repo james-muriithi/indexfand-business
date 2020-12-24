@@ -187,7 +187,7 @@ return [
             'updated_at_helper' => ' ',
             'deleted_at'        => 'Deleted at',
             'deleted_at_helper' => ' ',
-            'cutomer'           => 'Cutomer',
+            'customer'           => 'Customer',
             'cutomer_helper'    => ' ',
         ],
     ],

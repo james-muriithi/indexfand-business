@@ -24,7 +24,7 @@
                 <label class="required" for="cutomer_id">{{ trans('cruds.order.fields.cutomer') }}</label>
                 <select class="form-control select2 {{ $errors->has('cutomer') ? 'is-invalid' : '' }}" name="cutomer_id" id="cutomer_id" required>
                     @foreach($cutomers as $id => $cutomer)
-                        <option value="{{ $id }}" {{ (old('cutomer_id') ? old('cutomer_id') : $order->cutomer->id ?? '') == $id ? 'selected' : '' }}>{{ $cutomer }}</option>
+                        <option value="{{ $id }}" {{ (old('cutomer_id') ? old('cutomer_id') : $order->customer->id ?? '') == $id ? 'selected' : '' }}>{{ $cutomer }}</option>
                     @endforeach
                 </select>
                 @if($errors->has('cutomer'))
