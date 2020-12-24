@@ -10,6 +10,7 @@ use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
+use App\Notifications\OrderCreated;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -47,14 +48,21 @@ class OrdersApiController extends Controller
 
         $orderItems = $request->get('products');
 
+        $shopOwner = null;
+
         foreach ($orderItems as $orderItem) {
             $product = Product::find($orderItem['product_id']);
             $orderItem['order_id'] = $order->id;
+
+           $shopOwner = $product->shop->user;
+
             OrderItem::create($orderItem);
             $total += floatval($product->price);
         }
 
         $order->update(['total' => $total]);
+
+        $shopOwner->notify(new OrderCreated($order));
 
         return (new OrderResource($order->load(['customer','orderItems'])))
             ->response()
