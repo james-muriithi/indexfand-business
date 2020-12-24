@@ -17,7 +17,7 @@ class OrdersController extends Controller
     {
         abort_if(Gate::denies('order_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $orders = Order::with(['cutomer'])->get();
+        $orders = Order::with(['customer'])->get();
 
         return view('admin.orders.index', compact('orders'));
     }
@@ -28,7 +28,7 @@ class OrdersController extends Controller
 
         $cutomers = Customer::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $order->load('cutomer');
+        $order->load('customer');
 
         return view('admin.orders.edit', compact('cutomers', 'order'));
     }
@@ -44,7 +44,7 @@ class OrdersController extends Controller
     {
         abort_if(Gate::denies('order_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $order->load('cutomer');
+        $order->load('customer');
 
         return view('admin.orders.show', compact('order'));
     }
