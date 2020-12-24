@@ -22,7 +22,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     Route::apiResource('products', 'ProductApiController');
 
     // Orders
-    Route::apiResource('orders', 'OrdersApiController', ['except' => ['create']]);
+    Route::apiResource('orders', 'OrdersApiController');
 
     // Shops
     Route::apiResource('shops', 'ShopApiController');

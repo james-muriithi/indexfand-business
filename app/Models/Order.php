@@ -21,8 +21,9 @@ class Order extends Model
     ];
 
     protected $fillable = [
+        'customer_id',
+        'total',
         'status',
-        'cutomer_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -33,8 +34,13 @@ class Order extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
-    public function cutomer()
+    public function customer()
     {
-        return $this->belongsTo(Customer::class, 'cutomer_id');
+        return $this->belongsTo(Customer::class, 'customer_id');
+    }
+
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class, 'order_id');
     }
 }
