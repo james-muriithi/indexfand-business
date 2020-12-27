@@ -24,11 +24,11 @@ class OrderItem extends Model
 
     public function product()
     {
-        $this->hasOne(Product::class, 'id','product_id');
+        return $this->hasOne(Product::class, 'id','product_id');
     }
 
     public function order()
     {
-        $this->belongsTo(Order::class, 'order_id');
+        return $this->belongsTo(Order::class, 'order_id');
     }
 }

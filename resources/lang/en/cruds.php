@@ -180,7 +180,7 @@ return [
             'id'                => 'ID',
             'id_helper'         => ' ',
             'status'            => 'Status',
-            'status_helper'     => 'status',
+            'status_helper'     => '',
             'created_at'        => 'Created at',
             'created_at_helper' => ' ',
             'updated_at'        => 'Updated at',
@@ -189,6 +189,8 @@ return [
             'deleted_at_helper' => ' ',
             'customer'           => 'Customer',
             'cutomer_helper'    => ' ',
+            'total'             => 'Total',
+            'order_items'       => 'Order Items',
         ],
     ],
     'shopManagement'     => [

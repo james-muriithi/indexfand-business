@@ -21,7 +21,7 @@ class OrdersApiController extends Controller
     {
         abort_if(Gate::denies('order_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new OrderResource(Order::with(['cutomer'])->get());
+        return new OrderResource(Order::with(['customer'])->get());
     }
 
     public function show(Order $order)
