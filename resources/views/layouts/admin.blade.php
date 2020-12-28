@@ -57,7 +57,7 @@
                     <li class="c-header-nav-item dropdown d-xs-down-none mx-2"><a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                             <img src="{{asset('images/illustrations/notification-bell.svg')}}" alt="" width="20" height="20">
                             <span class="badge badge-pill badge-info">{{count($notifications)}}</span></a>
-                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg pt-0">
+                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg pt-0 notifications-dropdown">
                             <div class="dropdown-header bg-light"><strong>You have {{count($notifications)}} notifications</strong></div>
                             @if(count($notifications) > 0)
                                 @foreach($notifications as $notification)

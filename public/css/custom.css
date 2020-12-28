@@ -164,7 +164,9 @@ table.dataTable thead .sorting_desc {
 /*new styles*/
 .dropdown-menu {display: block;visibility: hidden;opacity:0;transform: translateY(50px);transition:.5s ease all;}
 .dropdown-menu.show {display: block;visibility: visible;opacity:1;transform: translateY(0px);transition:.5s ease all;}
-
+.notifications-dropdown{
+    min-width: 470px;
+}
 
 @media (min-width: 992px) {
     .login.login-1 .login-aside {
@@ -187,7 +189,26 @@ table.dataTable thead .sorting_desc {
         width: 100%;
         max-width: 400px; } }
 
-@media (max-width: 575.98px) {
+@media (max-width: 596px) {
+    .notifications-dropdown{
+        min-width: 370px;
+    }
+}
+
+@media (max-width: 488px) {
+    .notifications-dropdown{
+        min-width: 265px;
+    }
+}
+
+@media (max-width: 350px) {
+    .notifications-dropdown{
+        min-width: 265px;
+        right: -50px!important;
+    }
+}
+
+@media (max-width: 575px) {
     .login.login-1 .aside-img {
         min-height: 300px !important;
         background-size: 400px; }
