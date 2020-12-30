@@ -72,7 +72,7 @@
                         </div>
                         <!--end::Form group-->
                             <div class="custom-control custom-checkbox mb-2">
-                                <input type="checkbox" class="custom-control-input" id="customControlInline">
+                                <input type="checkbox" class="custom-control-input" ame="remember" id="remember" {{ old('remember') ? 'checked' : '' }} id="customControlInline">
                                 <label class="custom-control-label" for="customControlInline">Remember me</label>
                             </div>
                         <!--begin::Action-->

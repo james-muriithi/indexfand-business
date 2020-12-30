@@ -48,4 +48,21 @@ class LoginController extends Controller
         $phone = preg_replace('/^(0|254)/', '+254', $request->get('phone'));
         return ['mobile'=>$phone,'password'=>$request->get('password')];
     }
+
+    public function validate(Request $request, array $rules, array $messages = [], array $customAttributes = [])
+    {
+        $credentials = $this->credentials($request);
+
+        $remember_me = $request->has('remember');
+
+        if (Auth::attempt($credentials, $remember_me)) {
+            $user = auth()->user();
+
+            Auth::login($user,true);
+        }else{
+
+            return back()->with('error','Your credentials are not correct.');
+
+        }
+    }
 }
