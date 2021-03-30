@@ -57,6 +57,16 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Customers
     Route::delete('customers/destroy', 'CustomerController@massDestroy')->name('customers.massDestroy');
     Route::resource('customers', 'CustomerController', ['except' => ['create', 'store']]);
+
+    // Businesses
+    Route::delete('businesses/destroy', 'BusinessesController@massDestroy')->name('businesses.massDestroy');
+    Route::resource('businesses', 'BusinessesController', ['except' => ['create', 'store']]);
+
+    // Payments
+    Route::resource('payments', 'PaymentController', ['except' => ['create', 'store', 'edit', 'update', 'destroy']]);
+
+    // Withdraws
+    Route::resource('withdraws', 'WithdrawController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
 // Change password

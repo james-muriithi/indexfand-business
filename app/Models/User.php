@@ -61,6 +61,11 @@ class User extends Authenticatable
         return $this->hasMany(Shop::class, 'user_id', 'user_id');
     }
 
+    public function userBusinesses()
+    {
+        return $this->hasMany(Business::class, 'owner', 'user_id');
+    }
+
     public function getEmailVerifiedAtAttribute($value)
     {
         return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
