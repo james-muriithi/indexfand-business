@@ -266,7 +266,9 @@ class HomeController
 
         if (class_exists($settings4['model'])) {
             if (!Auth::user()->isAdmin){
-                $settings4['data'] = $settings4['model']::whereIn('id', $userBusinesses)
+                $settings4['data'] = $settings4['model']::whereHas('business', function ($query) use ($userBusinesses){
+                        $query->whereIn('id', $userBusinesses);
+                    })
                     ->latest()
                     ->take($settings4['entries_number'])
                     ->get();
