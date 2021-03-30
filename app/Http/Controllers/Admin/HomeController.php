@@ -106,7 +106,9 @@ class HomeController
 
         if (class_exists($settings2['model'])) {
             if (!Auth::user()->isAdmin){
-                $q = $settings2['model']::whereIn('id', $userBusinesses)
+                $q = $settings2['model']::whereHas('business', function ($query) use ($userBusinesses){
+                    $query->whereIn('id', $userBusinesses);
+                })
                     ->when(isset($settings2['filter_field']), function ($query) use ($settings2) {
                     if (isset($settings2['filter_days'])) {
                         return $query->where(
