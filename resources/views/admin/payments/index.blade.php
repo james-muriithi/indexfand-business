@@ -23,11 +23,9 @@
                         <th>
                             {{ trans('cruds.payment.fields.sender_contact') }}
                         </th>
-                        @if(auth()->user()->isAdmin)
-                            <th>
-                                {{ trans('cruds.payment.fields.receiver') }}
-                            </th>
-                        @endif
+                        <th>
+                            Account
+                        </th>
                         <th>
                             {{ trans('cruds.payment.fields.code') }}
                         </th>
@@ -57,11 +55,9 @@
                             <td>
                                 {{ $payment->sender_contact ?? '' }}
                             </td>
-                            @if(auth()->user()->isAdmin)
-                                <td>
-                                    {{ $payment->receiver ?? '' }}
-                                </td>
-                            @endif
+                            <td>
+                                {{ $payment->business->name ?? '' }}
+                            </td>
                             <td>
                                 {{ $payment->code ?? '' }}
                             </td>
@@ -105,6 +101,10 @@
     order: [[ 1, 'desc' ]],
     pageLength: 100,
   });
+    dtButtons = dtButtons.filter((el) => {
+        const notAllowedButtons = ['selectAll', 'selectNone', 'copy', 'csv'];
+        return !notAllowedButtons.includes(el.extend);
+    })
   let table = $('.datatable-Payment:not(.ajaxTable)').DataTable({ buttons: dtButtons })
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()

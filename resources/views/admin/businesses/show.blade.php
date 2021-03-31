@@ -12,6 +12,9 @@
                 <a class="btn btn-default" href="{{ route('admin.businesses.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
+                <a class="btn btn-primary" href="{{ route('admin.businesses.edit', $business->id) }}">
+                    {{ trans('global.edit') }}
+                </a>
             </div>
             <table class="table table-bordered table-striped">
                 <tbody>
@@ -92,6 +95,9 @@
             <div class="form-group">
                 <a class="btn btn-default" href="{{ route('admin.businesses.index') }}">
                     {{ trans('global.back_to_list') }}
+                </a>
+                <a class="btn btn-primary" href="{{ route('admin.businesses.edit', $business->id) }}">
+                    {{ trans('global.edit') }}
                 </a>
             </div>
         </div>

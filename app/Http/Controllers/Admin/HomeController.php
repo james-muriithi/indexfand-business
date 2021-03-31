@@ -255,6 +255,7 @@ class HomeController
             'fields'                => [
                 'id'             => '',
                 'sender_name'    => '',
+                'business'       => 'name',
                 'sender_contact' => '',
                 'code'           => '',
                 'amount'         => '',

@@ -141,7 +141,10 @@
   }
   dtButtons.push(deleteButton)
 @endcan
-    dtButtons = dtButtons.filter((el) => el.extend != 'selectAll' && el.extend != 'selectNone')
+    dtButtons = dtButtons.filter((el) => {
+        const notAllowedButtons = ['selectAll', 'selectNone', 'copy', 'csv'];
+        return !notAllowedButtons.includes(el.extend);
+    })
   $.extend(true, $.fn.dataTable.defaults, {
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],

@@ -47,13 +47,19 @@
                         {{-- Widget - latest entries --}}
                         <div class="{{ $settings4['column_class'] }}" style="overflow-x: auto;">
                             <h3>{{ $settings4['chart_title'] }}</h3>
-                            <table class="table table-bordered table-striped">
+                            <table class="table table-bordered table-striped datatable datatable-User">
                                 <thead>
                                 <tr>
                                     @foreach($settings4['fields'] as $key => $value)
-                                        <th>
-                                            {{ trans(sprintf('cruds.%s.fields.%s', $settings4['translation_key'] ?? 'pleaseUpdateWidget', $key)) }}
-                                        </th>
+                                        @if($key == 'business')
+                                            <th>
+                                                Account
+                                            </th>
+                                        @else
+                                            <th>
+                                                {{ trans(sprintf('cruds.%s.fields.%s', $settings4['translation_key'] ?? 'pleaseUpdateWidget', $key)) }}
+                                            </th>
+                                        @endif
                                     @endforeach
                                 </tr>
                                 </thead>
@@ -100,6 +106,13 @@
 @section('scripts')
 @parent
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script>
+    $('.datatable-User:not(.ajaxTable)').DataTable()
+    $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
+        $($.fn.dataTable.tables(true)).DataTable()
+            .columns.adjust();
+    });
+</script>
 @if(auth()->user()->isAdmin)
     {!! $chart5->renderJs() !!}
 @endif

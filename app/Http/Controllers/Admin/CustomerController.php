@@ -6,8 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
 use App\Models\Customer;
+use App\Models\Payment;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 
 class CustomerController extends Controller
@@ -16,7 +19,20 @@ class CustomerController extends Controller
     {
         abort_if(Gate::denies('customer_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $customers = Customer::all();
+        if (Auth::user()->isAdmin){
+            $customers = Payment::select('sender_contact', DB::raw('count(*) as total_payments'))
+                ->groupBy('sender_contact')->get();
+        }else{
+            $businesses = Auth::user()->userBusinesses()->pluck('id');
+            $payments = Payment::whereHas('business', function ($query) use ($businesses){
+                $query->whereIn('id', $businesses);
+            })
+                ->latest();
+            $customers = $payments->select('sender_contact', 'sender_name', DB::raw('count(*) as total_payments'))
+                ->groupBy('sender_contact', 'sender_name')
+                ->orderBy('total_payments', 'DESC')
+                ->get();
+        }
 
         return view('admin.customers.index', compact('customers'));
     }
