@@ -7,6 +7,7 @@ use App\Http\Helpers\exFPDF;
 use App\Models\Business;
 use Gate;
 use Illuminate\Http\Request;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Symfony\Component\HttpFoundation\Response;
 
 class PosterController extends Controller
@@ -27,6 +28,22 @@ class PosterController extends Controller
         $pdf->AddFont('aquatico','','Aquatico-Regular.php');
         $pdf->AddFont('moonb','','Moon-Bold.php');
         $pdf->AddFont('moonl','','Moon-Light.php');
+
+        //logo
+        $pdf->image('images/logos/logo.png',10,2,15, 15);
+
+        //name
+        $pdf->SetFont('moonb','',35);
+        $pdf->setXY($pdf->GetPageWidth() / 1.4, 5);
+        $pdf->setTextColor(255, 255, 255);
+        $pdf->Cell(19,12,"Lipa  Chap  Chap!",0,0,"R");
+
+
+        //qr
+        $url = "https://indexfand.com/pay/".$business->tag;
+        $qr = QrCode::format('png')->color(255, 0, 0)->generate($url);
+        return $qr;
+//        $pdf->image( $qr,$pdf->GetPageWidth()-50,25,-76);
 
         $pdf->Output('D','test.pdf');
 
