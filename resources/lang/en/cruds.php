@@ -310,5 +310,23 @@ return [
     'withdraw'       => [
         'title'          => 'Withdraw',
         'title_singular' => 'Withdraw',
+        'fields'         => [
+            'id'                => 'ID',
+            'id_helper'         => ' ',
+            'business'          => 'Business',
+            'business_helper'   => ' ',
+            'phone'             => 'Phone',
+            'phone_helper'      => 'Provide a safaricom phone number to withdraw to',
+            'amount'            => 'Amount',
+            'amount_helper'     => ' ',
+            'status'            => 'Status',
+            'status_helper'     => ' ',
+            'created_at'        => 'Created at',
+            'created_at_helper' => ' ',
+            'updated_at'        => 'Updated at',
+            'updated_at_helper' => ' ',
+            'deleted_at'        => 'Deleted at',
+            'deleted_at_helper' => ' ',
+        ],
     ],
 ];

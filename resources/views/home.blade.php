@@ -19,8 +19,8 @@
                         <div class="{{ $settings1['column_class'] }}">
                             <div class="card text-white bg-primary">
                                 <div class="card-body pb-0">
+                                    <div class="font-weight-bolder h5">{{ $settings1['chart_title'] }}</div>
                                     <div class="text-value">{{ number_format($settings1['total_number']) }}</div>
-                                    <div>{{ $settings1['chart_title'] }}</div>
                                     <br />
                                 </div>
                             </div>
@@ -28,8 +28,8 @@
                         <div class="{{ $settings2['column_class'] }}">
                             <div class="card text-white bg-success">
                                 <div class="card-body pb-0">
+                                    <div class="font-weight-bolder h5">{{ $settings2['chart_title'] }}</div>
                                     <div class="text-value">Ksh. {{ number_format($settings2['total_number']) }}</div>
-                                    <div>{{ $settings2['chart_title'] }}</div>
                                     <br />
                                 </div>
                             </div>
@@ -37,8 +37,18 @@
                         <div class="{{ $settings3['column_class'] }}">
                             <div class="card text-white bg-warning">
                                 <div class="card-body pb-0">
+                                    <div class="font-weight-bold h5">{{ $settings3['chart_title'] }}</div>
                                     <div class="text-value">Ksh. {{ number_format($settings3['total_number']) }}</div>
-                                    <div>{{ $settings3['chart_title'] }}</div>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="{{ $settings6['column_class'] }}">
+                            <div class="card text-white bg-info">
+                                <div class="card-body pb-0">
+                                    <div class="font-weight-bold h5">{{ $settings6['chart_title'] }}</div>
+                                    <div class="text-value">Ksh. {{ number_format($settings6['total_number']) }}</div>
                                     <br />
                                 </div>
                             </div>

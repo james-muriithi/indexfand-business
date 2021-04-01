@@ -66,7 +66,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('payments', 'PaymentController', ['except' => ['create', 'store', 'edit', 'update', 'destroy']]);
 
     // Withdraws
-    Route::resource('withdraws', 'WithdrawController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
+    Route::resource('withdraws', 'WithdrawController', ['except' => ['edit', 'update', 'destroy']]);
+
+    // Posters
+    Route::get('poster/{business}', 'PosterController@index')->name('downloadPoster');
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
 // Change password

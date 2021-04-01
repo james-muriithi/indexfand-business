@@ -86,6 +86,10 @@
                                     </a>
                                 @endcan
 
+                                    <a class="btn btn-xs btn-warning mt-1" href="{{ route('admin.downloadPoster', $business->id) }}">
+                                        {{ trans('global.downloadPoster') }}
+                                    </a>
+
                                 @can('business_deletes')
                                     <form action="{{ route('admin.businesses.destroy', $business->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">

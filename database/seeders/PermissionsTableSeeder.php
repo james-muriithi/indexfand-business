@@ -242,6 +242,14 @@ class PermissionsTableSeeder extends Seeder
                 'id'    => 59,
                 'title' => 'withdraw_access',
             ],
+            [
+                'id'    => 60,
+                'title' => 'withdraw_create',
+            ],
+            [
+                'id'    => 61,
+                'title' => 'withdraw_show',
+            ],
         ];
 
         Permission::insert($permissions);

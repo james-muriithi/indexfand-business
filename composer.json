@@ -11,6 +11,7 @@
         "php": "^7.3",
         "appstract/laravel-opcache": "^4.0",
         "bugsnag/bugsnag-laravel": "^2.20",
+        "codedge/laravel-fpdf": "^1.7",
         "doctrine/dbal": "^2.10",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
