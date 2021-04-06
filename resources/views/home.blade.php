@@ -77,17 +77,23 @@
                                 @forelse($settings4['data'] as $entry)
                                     <tr>
                                         @foreach($settings4['fields'] as $key => $value)
-                                            <td>
-                                                @if($value === '')
-                                                    {{ $entry->{$key} }}
-                                                @elseif(is_iterable($entry->{$key}))
-                                                    @foreach($entry->{$key} as $subEentry)
-                                                        <span class="label label-info">{{ $subEentry->{$value} }}</span>
-                                                    @endforeach
-                                                @else
-                                                    {{ data_get($entry, $key . '.' . $value) }}
-                                                @endif
-                                            </td>
+                                            @if($key == 'id')
+                                                <td>
+                                                    {{$loop->iteration}}
+                                                </td>
+                                            @else
+                                                <td>
+                                                    @if($value === '')
+                                                        {{ $entry->{$key} }}
+                                                    @elseif(is_iterable($entry->{$key}))
+                                                        @foreach($entry->{$key} as $subEentry)
+                                                            <span class="label label-info">{{ $subEentry->{$value} }}</span>
+                                                        @endforeach
+                                                    @else
+                                                        {{ data_get($entry, $key . '.' . $value) }}
+                                                    @endif
+                                                </td>
+                                            @endif
                                         @endforeach
                                     </tr>
                                 @empty
