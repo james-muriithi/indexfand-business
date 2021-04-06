@@ -21,13 +21,14 @@ class CustomerController extends Controller
 
         if (Auth::user()->isAdmin){
             $customers = Payment::select('sender_contact', DB::raw('count(*) as total_payments'))
-                ->groupBy('sender_contact')->get();
+                ->groupBy('sender_contact')
+                ->orderBy('total_payments', 'DESC')
+                ->get();
         }else{
             $businesses = Auth::user()->userBusinesses()->pluck('id');
             $payments = Payment::whereHas('business', function ($query) use ($businesses){
                 $query->whereIn('id', $businesses);
-            })
-                ->latest();
+            });
             $customers = $payments->select('sender_contact', 'sender_name', DB::raw('count(*) as total_payments'))
                 ->groupBy('sender_contact', 'sender_name')
                 ->orderBy('total_payments', 'DESC')
