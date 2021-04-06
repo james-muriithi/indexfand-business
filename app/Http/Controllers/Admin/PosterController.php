@@ -48,7 +48,7 @@ class PosterController extends Controller
         $pdf->setXY(38,$y - 2);
         $pdf->Cell(29,12, '4030551',0,"L");
 
-        $y = $pdf->GetY()+ 15;
+        $y = $pdf->GetY()+ 5;
         $pdf->setTextColor(33, 33, 33);
         $pdf->SetXY(7, $y);
         $pdf->SetFont('moonb','',19);
@@ -57,9 +57,8 @@ class PosterController extends Controller
         $pdf->setXY(43,$y - 3);
         $pdf->Cell(29,12, strtolower($business->tag),0,"L");
 
-        $y = $pdf->GetY()+ 15;
         $pdf->setTextColor(84, 59, 121);
-        $pdf->SetXY(5, $pdf->GetY()+ 20);
+        $pdf->SetXY(5, $pdf->GetY()+ 7);
         $pdf->SetFont('coves','',15);
         $pdf->Cell(29,7,$url,0,"L");
 
