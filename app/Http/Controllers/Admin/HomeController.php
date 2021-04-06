@@ -175,7 +175,7 @@ class HomeController
             'aggregate_function'    => 'sum',
             'aggregate_field'       => 'amount',
             'filter_field'          => 'created_at',
-            'filter_days'           => '1',
+            'filter_period'         => 'today',
             'group_by_field_format' => 'Y-m-d H:i:s',
             'column_class'          => 'col-md-3',
             'entries_number'        => '5',
@@ -203,6 +203,8 @@ class HomeController
                         case 'year':
                             $start  = date('Y') . '-01-01';
                             break;
+                        case 'today':
+                            return $query->whereDate($settings3['filter_field'], today());
                     }
 
                     if (isset($start)) {
