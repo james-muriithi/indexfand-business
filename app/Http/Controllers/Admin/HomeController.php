@@ -233,6 +233,7 @@ class HomeController
                 'sender_contact' => '',
                 'code'           => '',
                 'amount'         => '',
+                'created_at'     => '',
             ],
             'translation_key'       => 'payment',
         ];
