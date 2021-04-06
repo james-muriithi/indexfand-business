@@ -1,4 +1,6 @@
 <?php
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', 'middleware' => ['auth:api']], function () {
     // Permissions
@@ -29,4 +31,10 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
 
     // Customers
     Route::apiResource('customers', 'CustomerApiController', ['except' => ['create']]);
+});
+
+Route::group(['as' => 'api.b2c', 'namespace' => 'Api\V1\Admin'], function (){
+    Route::post('b2c_response/{token}', 'CallbackApiController@response')->name('response');
+
+    Route::post('timeout', 'CallbackApiController@timeout')->name('timeout');
 });

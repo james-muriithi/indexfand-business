@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -37,5 +38,14 @@ class Withdraw extends Model
     public function business()
     {
         return $this->belongsTo(Business::class, 'business_id');
+    }
+
+    public static function isDuplicateWithdraw($businessId, $amount)
+    {
+        return self::where('business_id', $businessId)
+            ->where('amount', $amount)
+            ->where('created_at', '>',Carbon::now()->subSeconds(90)->toDateTimeString())
+            ->get()
+            ->count() > 0;
     }
 }
