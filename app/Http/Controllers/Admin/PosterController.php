@@ -105,7 +105,7 @@ class PosterController extends Controller
         $pdf->SetLineWidth(2);
         $pdf->line($pdf->GetPageWidth() - 37.7,$pdf->GetPageHeight() - 3,$pdf->GetPageWidth(),$pdf->GetPageHeight() - 3);
 
-        $pdf->Output('D','test.pdf');
+        $pdf->Output('D',$business->name.'@indexfand.pdf');
 
 
         return view('admin.posters.index');
