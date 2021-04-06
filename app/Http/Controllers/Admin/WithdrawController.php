@@ -13,6 +13,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class WithdrawController extends Controller
 {
+    const TRANSACTION_COST = 20;
+
     public function index()
     {
         abort_if(Gate::denies('withdraw_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -33,6 +35,24 @@ class WithdrawController extends Controller
 
     public function store(StoreWithdrawRequest $request)
     {
+        $business = Business::find($request->input('business_id'));
+
+        $amount = intval($request->input('amount'));
+        $phone = $request->input('phone');
+
+        if (!$business || $business->owner != Auth::id()){
+            return redirect()->route('admin.withdraws.index')
+                ->with('error', 'Business does not exists');
+        }
+
+        if ($business->balance < $amount + self::TRANSACTION_COST){
+            return redirect()->route('admin.withdraws.index')
+                ->with('error', 'You do not have enough balance to withdraw Ksh. '.$amount);
+        }
+
+
+
+
         $withdraw = Withdraw::create($request->all());
 
         return redirect()->route('admin.withdraws.index');

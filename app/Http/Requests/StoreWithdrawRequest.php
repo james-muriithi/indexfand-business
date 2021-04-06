@@ -2,16 +2,25 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Withdraw;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Response;
 
 class StoreWithdrawRequest extends FormRequest
 {
     public function authorize()
     {
         return Gate::allows('withdraw_create');
+    }
+
+    public function prepareForValidation()
+    {
+        $this->formatPhoneNumber();
+    }
+
+    protected function formatPhoneNumber(){
+        return $this->merge([
+            'phone' => preg_replace('/^(0|\+254)/', '254', $this->get('phone'))
+        ]);
     }
 
     public function rules()
@@ -24,6 +33,7 @@ class StoreWithdrawRequest extends FormRequest
             'phone'  => [
                 'string',
                 'required',
+                'regex:/^(254)(\d){9}$/'
             ],
             'amount' => [
                 'required',

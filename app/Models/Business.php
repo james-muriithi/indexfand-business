@@ -39,7 +39,7 @@ class Business extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
-    public function owner()
+    public function businessOwner()
     {
         return $this->belongsTo(User::class, 'owner', 'user_id');
     }
