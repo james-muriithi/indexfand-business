@@ -8,6 +8,7 @@ use App\Http\Helpers\B2cMpesa;
 use App\Models\B2cResponse;
 use App\Models\Withdraw;
 use App\Models\WithdrawRequest;
+use App\Notifications\WithdrawNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -55,7 +56,7 @@ class CallbackApiController extends Controller
                         $withdrawRequest->status = 1;
                         $withdrawRequest->save();
 
-                        Withdraw::create([
+                        $withdraw = Withdraw::create([
                             'business_id' => $withdrawRequest->business->id,
                             'phone' => $phone,
                             'amount' => $amount,
@@ -69,6 +70,8 @@ class CallbackApiController extends Controller
                             ' to your M-Pesa. New balance is Ksh '.$withdrawRequest->business->balance.
                             '. M-PESA Ref '.$TransactionId.PHP_EOL.'#indexfand';
                         $this->sendMessage($phone, $message);
+
+                        $withdrawRequest->business->businessOwner->notify(new WithdrawNotification($withdraw, $message));
                     }
                 }else{
                     //hope this never happens
@@ -76,7 +79,11 @@ class CallbackApiController extends Controller
                     $this->sendMessage('+254798272066', $msg);
                 }
             }else{
-                if ($withdrawRequest && $withdrawRequest->business){
+                if ($withdrawRequest && $withdrawRequest->business &&
+                    !$withdrawRequest->responded){
+                    $withdrawRequest->responded = 1;
+                    $withdrawRequest->save();
+
                     $phone = preg_replace('/^(0|\+?254)/', '+254',
                         array_filter(explode(' - ', $withdrawRequest->business->contact))[0]);
 
@@ -88,6 +95,8 @@ class CallbackApiController extends Controller
                         'Error => '.$response['Result']['ResultDesc'];
 
                     $this->sendMessage('+254798272066', $errMsg);
+
+                    $withdrawRequest->business->businessOwner->notify(new WithdrawNotification($withdrawRequest, $message, true));
                 }
             }
 

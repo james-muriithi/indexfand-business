@@ -70,6 +70,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Posters
     Route::get('poster/{business}', 'PosterController@index')->name('downloadPoster');
+
+    //notifications
+    Route::get('notifications/read_all', 'NotificationsController@readAll')->name('notifications.read_all');
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
 // Change password

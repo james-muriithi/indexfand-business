@@ -43,7 +43,7 @@
                 <div class="form-group">
                     <label class="required" for="amount">{{ trans('cruds.withdraw.fields.amount') }}</label>
                     <input class="form-control {{ $errors->has('amount') ? 'is-invalid' : '' }}" type="number"
-                           name="amount" id="amount" value="{{ old('amount', '') }}" step="10" min="10" required>
+                           name="amount" id="amount" value="{{ old('amount', '') }}" step="10" min="5" required>
                     @if($errors->has('amount'))
                         <div class="invalid-feedback">
                             {{ $errors->first('amount') }}

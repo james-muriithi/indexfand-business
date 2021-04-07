@@ -16,10 +16,10 @@
     <link href="https://cdn.datatables.net/buttons/1.2.4/css/buttons.dataTables.min.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/select/1.3.0/css/select.dataTables.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+{{--    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />--}}
     <link href="https://unpkg.com/@coreui/coreui@3.2/dist/css/coreui.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" rel="stylesheet" />
+{{--    <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" rel="stylesheet" />--}}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/css/perfect-scrollbar.min.css" rel="stylesheet" />
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet" />
     @yield('styles')
@@ -75,26 +75,38 @@
                                                 <div class="small text-muted text-truncate">Order Total: Ksh{{$order->total}}</div>
                                             </div>
                                         </a>
+
+                                        @elseif($notification->type == 'App\Notifications\WithdrawNotification')
+                                        <a class="dropdown-item" href="#">
+                                            <div class="message w-100">
+                                                <div class="py-3 mfe-3 float-left">
+                                                    <div class="c-avatar">
+                                                        <img class="img-thumbnail bg-transparent border-0"
+                                                             src="{{asset('images/illustrations/withdrawal.svg')}}" alt="">
+                                                    </div>
+                                                </div>
+                                                <div><small class="text-muted">{{$notification->data['error'] ? 'Failed Withdraw' : 'New Withdraw'}}</small>
+                                                    <small class="text-muted float-right mt-1">{{$notification->created_at->diffForHumans()}}</small></div>
+                                                @if(!$notification->data['error'])
+                                                    @php($withdraw = \App\Models\Withdraw::find($notification->data['withdraw_id']))
+                                                    <div class="text-truncate font-weight-bold" >{{$withdraw->business->name}} Withdraw</div>
+                                                    <div class="small text-muted text-truncate">Withdraw Amount: Ksh{{$withdraw->amount}}</div>
+                                                @else
+                                                    <div class="text-truncate font-weight-bold text-danger" >Failed Withdraw</div>
+                                                    <div class="small text-muted text-truncate text-danger">{{$notification->data['message']}}</div>
+                                                @endif
+                                            </div>
+                                        </a>
                                     @endif
+
                                 @endforeach
-                                <a class="dropdown-item text-center border-top" href="#"><strong>View all notifications</strong></a>
+                                <a class="dropdown-item text-center border-top" href="{{route('admin.notifications.read_all')}}">
+                                    <strong>Mark all as read</strong></a>
                             @else
                                 <div class="w-100 text-center mt-2">
                                     <img src="{{asset('images/illustrations/alarm-off.svg')}}" alt="No notifications" width="100" height="100">
                                 </div>
                             @endif
-                                    {{--                            <a class="dropdown-item" href="#">--}}
-{{--                                <div class="message">--}}
-{{--                                    <div class="py-3 mfe-3 float-left">--}}
-{{--                                        <div class="c-avatar">--}}
-{{--                                            <img class="img-thumbnail bg-transparent border-0" src="{{asset('images/illustrations/alert.svg')}}" alt="">--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                    <div><small class="text-muted">John Doe</small><small class="text-muted float-right mt-1">5 minutes ago</small></div>--}}
-{{--                                    <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>--}}
-{{--                                    <div class="small text-muted text-truncate">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</div>--}}
-{{--                                </div>--}}
-{{--                            </a>--}}
                         </div>
                     </li>
 
@@ -169,11 +181,11 @@
     <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
     <script src="https://cdn.datatables.net/select/1.3.0/js/dataTables.select.min.js"></script>
-    <script src="https://cdn.ckeditor.com/ckeditor5/16.0.0/classic/ckeditor.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+{{--    <script src="https://cdn.ckeditor.com/ckeditor5/16.0.0/classic/ckeditor.js"></script>--}}
+{{--    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>--}}
+{{--    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>--}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
+{{--    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>--}}
     <script src="{{ asset('js/main.js') }}"></script>
     <script>
         $(function() {
