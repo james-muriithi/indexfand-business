@@ -21,15 +21,16 @@ class WithdrawController extends Controller
         abort_if(Gate::denies('withdraw_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $withdraws = Withdraw::with(['business'])->get();
+        $businesses = Auth::user()->userBusinesses;
 
-        return view('admin.withdraws.index', compact('withdraws'));
+        return view('admin.withdraws.index', compact('withdraws', 'businesses'));
     }
 
     public function create()
     {
         abort_if(Gate::denies('withdraw_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $businesses = Auth::user()->userBusinesses()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');;
+        $businesses = Auth::user()->userBusinesses;
 
         return view('admin.withdraws.create', compact('businesses'));
     }

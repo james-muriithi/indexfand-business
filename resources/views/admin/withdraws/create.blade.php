@@ -12,8 +12,13 @@
             <div class="form-group">
                 <label for="business_id">{{ trans('cruds.withdraw.fields.business') }}</label>
                 <select class="form-control select2 {{ $errors->has('business') ? 'is-invalid' : '' }}" name="business_id" id="business_id">
-                    @foreach($businesses as $id => $business)
-                        <option value="{{ $id }}" {{ old('business_id') == $id ? 'selected' : '' }}>{{ $business }}</option>
+                    <option value="" selected>Please Select</option>
+                    @foreach($businesses as $business)
+                        <option
+                            data-contact="{{$business->contact}}"
+                            value="{{ $business->id }}" {{ old('business_id') == $business->id ? 'selected' : '' }}>
+                            {{ $business->name }}
+                        </option>
                     @endforeach
                 </select>
                 @if($errors->has('business'))
@@ -25,13 +30,12 @@
             </div>
             <div class="form-group">
                 <label class="required" for="phone">{{ trans('cruds.withdraw.fields.phone') }}</label>
-                <input class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}" type="text" name="phone" id="phone" value="{{ old('phone', '') }}" required>
+                <input class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}" type="text" name="phone" id="phone" value="{{ old('phone', '') }}" readonly>
                 @if($errors->has('phone'))
                     <div class="invalid-feedback">
                         {{ $errors->first('phone') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.withdraw.fields.phone_helper') }}</span>
             </div>
             <div class="form-group">
                 <label class="required" for="amount">{{ trans('cruds.withdraw.fields.amount') }}</label>
@@ -54,4 +58,15 @@
 
 
 
+@endsection
+
+@section('scripts')
+    @parent
+    <script>
+        $('#business_id').on('change', function (){
+            if ($(this).find('option:selected').val()){
+                $('#phone').val($(this).find('option:selected').data('contact'))
+            }
+        });
+    </script>
 @endsection
