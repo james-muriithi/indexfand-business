@@ -79,7 +79,7 @@
                                         @foreach($settings4['fields'] as $key => $value)
                                             @if($key == 'id')
                                                 <td>
-                                                    {{$loop->iteration}}
+                                                    {{$loop->parent->iteration}}
                                                 </td>
                                             @else
                                                 <td>
