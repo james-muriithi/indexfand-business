@@ -14,8 +14,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class WithdrawController extends Controller
 {
-    const TRANSACTION_COST = 0;
-
     public function index()
     {
         abort_if(Gate::denies('withdraw_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -47,7 +45,7 @@ class WithdrawController extends Controller
                 ->with('error', 'Business does not exists');
         }
 
-        if ($business->balance < $amount + self::TRANSACTION_COST){
+        if ($business->balance < $amount + B2cMpesa::TRANSACTION_COST){
             return redirect()->route('admin.withdraws.index')
                 ->with('error', 'You do not have enough balance to withdraw Ksh. '.$amount);
         }

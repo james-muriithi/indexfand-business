@@ -8,7 +8,8 @@ use Safaricom\Mpesa\Mpesa;
 
 class B2cMpesa extends Mpesa
 {
-    const TRANSACTION_COST = 20;
+//    const TRANSACTION_COST = 25;
+    const TRANSACTION_COST = 0;
     public static function generateLiveToken()
     {
         try {
