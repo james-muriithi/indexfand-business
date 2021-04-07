@@ -55,6 +55,14 @@
                             <input type="checkbox" disabled="disabled" {{ $withdraw->status ? 'checked' : '' }}>
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.withdraw.fields.created_at') }}
+                        </th>
+                        <td>
+                            {{ $withdraw->created_at }}
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">

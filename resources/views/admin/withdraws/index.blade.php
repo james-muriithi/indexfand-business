@@ -42,7 +42,8 @@
                 </div>
                 <div class="form-group">
                     <label class="required" for="amount">{{ trans('cruds.withdraw.fields.amount') }}</label>
-                    <input class="form-control {{ $errors->has('amount') ? 'is-invalid' : '' }}" type="number" name="amount" id="amount" value="{{ old('amount', '') }}" step="0.01" required>
+                    <input class="form-control {{ $errors->has('amount') ? 'is-invalid' : '' }}" type="number"
+                           name="amount" id="amount" value="{{ old('amount', '') }}" step="10" min="10" required>
                     @if($errors->has('amount'))
                         <div class="invalid-feedback">
                             {{ $errors->first('amount') }}
@@ -88,6 +89,9 @@
                             {{ trans('cruds.withdraw.fields.status') }}
                         </th>
                         <th>
+                            {{ trans('cruds.withdraw.fields.created_at') }}
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -99,7 +103,7 @@
 
                             </td>
                             <td>
-                                {{ $withdraw->id ?? '' }}
+                                {{ $loop->iteration }}
                             </td>
                             <td>
                                 {{ $withdraw->business->name ?? '' }}
@@ -113,6 +117,9 @@
                             <td>
                                 <span style="display:none">{{ $withdraw->status ?? '' }}</span>
                                 <input type="checkbox" disabled="disabled" {{ $withdraw->status ? 'checked' : '' }}>
+                            </td>
+                            <td>
+                                {{ $withdraw->created_at ?? '' }}
                             </td>
                             <td>
                                 @can('withdraw_show')
@@ -143,7 +150,7 @@
 
   $.extend(true, $.fn.dataTable.defaults, {
     orderCellsTop: true,
-    order: [[ 1, 'desc' ]],
+    order: [[ 1, 'asc' ]],
     pageLength: 100,
   });
     dtButtons = dtButtons.filter((el) => {
@@ -162,7 +169,7 @@
         });
 
     @if (session()->has('success'))
-        toastr.success("{{session()->get('success')}}");
+        toastr.success("{{session()->get('success')}}"  );
     @endif
     @if (session()->has('error'))
         toastr.error("{{session()->get('error')}}");

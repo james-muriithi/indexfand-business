@@ -18,7 +18,12 @@ class WithdrawController extends Controller
     {
         abort_if(Gate::denies('withdraw_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $withdraws = Withdraw::with(['business'])->get();
+        $withdraws = Withdraw::with(['business'])
+            ->whereHas('business', function ($query){
+                $query->whereIn('id', Auth::user()->userBusinesses()->pluck('id'));
+            })
+            ->latest()
+            ->get();
         $businesses = Auth::user()->userBusinesses;
 
         return view('admin.withdraws.index', compact('withdraws', 'businesses'));
@@ -68,8 +73,6 @@ class WithdrawController extends Controller
                 'business_id' => $business->id,
             ]);
 
-            return $response;
-
 //            Withdraw::create($request->all());
 
             return redirect()->route('admin.withdraws.index')
@@ -101,9 +104,9 @@ class WithdrawController extends Controller
         $PartyB= $phone;
         $Remarks = 'withdrawal';
         $QueueTimeOutURL = env('APP_ENV') == 'local' ?
-            'https://018799a8e071.ngrok.io/api/timeout' : route('api.b2ctimeout');
+            'https://1857fec0e33f.ngrok.io/api/timeout' : route('api.b2ctimeout');
         $ResultURL= env('APP_ENV') == 'local' ?
-            'https://018799a8e071.ngrok.io/api/b2c_response/'.env('CALLBACK_KEY') : route('api.b2cresponse', env('CALLBACK_KEY'));
+            'https://1857fec0e33f.ngrok.io/api/b2c_response/'.env('CALLBACK_KEY') : route('api.b2cresponse', env('CALLBACK_KEY'));
         $Occasion = '';
 
         return $mpesa::b2c($InitiatorName, $SecurityCredential, $CommandID, $Amount, $PartyA,

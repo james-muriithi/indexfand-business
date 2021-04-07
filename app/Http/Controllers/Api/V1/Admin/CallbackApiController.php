@@ -62,7 +62,7 @@ class CallbackApiController extends Controller
                             'status' => 1,
                         ]);
                         $withdrawRequest->business->balance =  $withdrawRequest->business->balance -($amount + B2cMpesa::TRANSACTION_COST);
-                        $withdrawRequest->save();
+                        $withdrawRequest->business->save();
 
                         //send sms
                         $message = 'Ksh. '.$amount. ' has been withdrawn from '.$withdrawRequest->business->name.
