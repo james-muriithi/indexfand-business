@@ -88,9 +88,21 @@ class B2cMpesa extends Mpesa
     }
 
     public static function generateSecurityCredential(){
-        $pubkey = file_get_contents('https://developer.safaricom.co.ke/sites/default/files/cert/cert_prod/cert.cer');
+        $pubkey = self::curl_get_file_contents(('https://developer.safaricom.co.ke/sites/default/files/cert/cert_prod/cert.cer');
         $plaintext = env('INITIATOR_PASSWORD', '');
         openssl_public_encrypt($plaintext, $encrypted, $pubkey, OPENSSL_PKCS1_PADDING);
         return base64_encode($encrypted);
+    }
+
+    public static function curl_get_file_contents($URL)
+    {
+        $c = curl_init();
+        curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($c, CURLOPT_URL, $URL);
+        $contents = curl_exec($c);
+        curl_close($c);
+
+        if ($contents) return $contents;
+        else return FALSE;
     }
 }
