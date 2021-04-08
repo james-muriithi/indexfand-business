@@ -49,7 +49,7 @@ class CallbackApiController extends Controller
                     'TransactionCompletedDateTime' => $time,
                 ]);
 
-                if ($withdrawRequest && $withdrawRequest->business){
+                if ($withdrawRequest && $withdrawRequest->business || !$withdrawRequest->responded){
                     $phone = preg_replace('/^(0|\+?254)/', '+254',array_filter(explode(' - ', $publicName))[0]);
 
                     if (!Withdraw::isDuplicateWithdraw($amount, $withdrawRequest->business->id)){
@@ -62,6 +62,9 @@ class CallbackApiController extends Controller
                             'amount' => $amount,
                             'status' => 1,
                         ]);
+
+                        $withdrawRequest->responded = 1;
+                        $withdrawRequest->save();
                         $withdrawRequest->business->balance =  $withdrawRequest->business->balance -($amount + B2cMpesa::TRANSACTION_COST);
                         $withdrawRequest->business->save();
 
