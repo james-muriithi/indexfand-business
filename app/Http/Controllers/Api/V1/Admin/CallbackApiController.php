@@ -37,18 +37,6 @@ class CallbackApiController extends Controller
                 $utility = $resultParameters['ResultParameter'][4]['Value'];
                 $working = $resultParameters['ResultParameter'][5]['Value'];
 
-
-                B2cResponse::create([
-                    'ConversationID' => $ConversationId,
-                    'OriginatorConversationID' => $OriginatorConversationId,
-                    'TransactionId' => $TransactionId,
-                    'TransactionAmount' => $amount,
-                    'ReceiverPartyPublicName' => $publicName,
-                    'B2CUtilityAccountAvailableFunds' => floatval($utility),
-                    'B2CWorkingAccountAvailableFunds' => floatval($working),
-                    'TransactionCompletedDateTime' => $time,
-                ]);
-
                 if ($withdrawRequest && $withdrawRequest->business){
                     $phone = preg_replace('/^(0|\+?254)/', '+254',array_filter(explode(' - ', $publicName))[0]);
 
@@ -59,6 +47,17 @@ class CallbackApiController extends Controller
 
                         $withdrawRequest->status = 1;
                         $withdrawRequest->save();
+
+                        B2cResponse::create([
+                            'ConversationID' => $ConversationId,
+                            'OriginatorConversationID' => $OriginatorConversationId,
+                            'TransactionId' => $TransactionId,
+                            'TransactionAmount' => $amount,
+                            'ReceiverPartyPublicName' => $publicName,
+                            'B2CUtilityAccountAvailableFunds' => floatval($utility),
+                            'B2CWorkingAccountAvailableFunds' => floatval($working),
+                            'TransactionCompletedDateTime' => $time,
+                        ]);
 
                         $withdraw = Withdraw::create([
                             'business_id' => $withdrawRequest->business->id,
