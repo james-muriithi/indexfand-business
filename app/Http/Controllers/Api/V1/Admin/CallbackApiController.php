@@ -54,6 +54,9 @@ class CallbackApiController extends Controller
 
 //                    if (!Withdraw::isDuplicateWithdraw($amount, $withdrawRequest->business->id) && !$withdrawRequest->responded){
                     if (!$withdrawRequest->responded){
+                        $withdrawRequest->responded = 1;
+                        $withdrawRequest->save();
+
                         $withdrawRequest->status = 1;
                         $withdrawRequest->save();
 
@@ -64,8 +67,6 @@ class CallbackApiController extends Controller
                             'status' => 1,
                         ]);
 
-                        $withdrawRequest->responded = 1;
-                        $withdrawRequest->save();
                         $withdrawRequest->business->balance =  $withdrawRequest->business->balance -($amount + B2cMpesa::TRANSACTION_COST);
                         $withdrawRequest->business->save();
 
