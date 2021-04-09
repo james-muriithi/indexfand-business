@@ -102,6 +102,6 @@ class User extends Authenticatable
     public function routeNotificationForMail($notification)
     {
         // Return email address and name...
-        return [$this->email => $this->name];
+        return [trim($this->email) => $this->name];
     }
 }
