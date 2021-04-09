@@ -49,10 +49,10 @@ class CallbackApiController extends Controller
                     'TransactionCompletedDateTime' => $time,
                 ]);
 
-                if ($withdrawRequest && $withdrawRequest->business || !$withdrawRequest->responded){
+                if ($withdrawRequest && $withdrawRequest->business){
                     $phone = preg_replace('/^(0|\+?254)/', '+254',array_filter(explode(' - ', $publicName))[0]);
 
-                    if (!Withdraw::isDuplicateWithdraw($amount, $withdrawRequest->business->id)){
+                    if (!Withdraw::isDuplicateWithdraw($amount, $withdrawRequest->business->id) || !$withdrawRequest->responded){
                         $withdrawRequest->status = 1;
                         $withdrawRequest->save();
 
