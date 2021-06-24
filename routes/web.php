@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Mail;
+
 Route::redirect('/', '/login');
 Route::get('/home', function () {
     if (session('status')) {

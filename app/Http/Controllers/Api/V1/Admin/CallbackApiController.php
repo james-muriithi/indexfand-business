@@ -10,10 +10,12 @@ use App\Models\Withdraw;
 use App\Models\WithdrawRequest;
 use App\Notifications\WithdrawNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class CallbackApiController extends Controller
 {
+    public const LOW_UTILITY_BALANCE = 6000;
     public function response(Request $request, $token)
     {
         Storage::append('b2c/response.json', json_encode($request->all()));
@@ -76,6 +78,26 @@ class CallbackApiController extends Controller
                         $this->sendMessage($phone, $message);
 
                         $withdrawRequest->business->businessOwner->notify(new WithdrawNotification($withdraw, $message));
+
+                        // if low balance
+                        if ((int)$utility < self::LOW_UTILITY_BALANCE){
+                            $email = 'patrieno55@gmail.com';
+                            $phone = '254798272066';
+                            $subject = 'Courtesy Balance Notification';
+
+                            $mesage = 'This is to inform you that your credit level on Mpesa is now lower than your threshold amount.'.PHP_EOL
+                                .' Current Balance - KES '.$utility.'.';
+                            $emailMessage = $this->generateEmailMessage($utility, $working);
+
+                            $this->sendMessage($phone, $mesage);
+
+                            Mail::send([], [], function ($message) use ($email, $emailMessage, $subject){
+                                $message->to($email)
+                                    ->subject($subject)
+                                    ->setBody($emailMessage, 'text/html');
+                            });
+                        }
+
                     }
                 }else{
                     //hope this never happens
@@ -126,5 +148,31 @@ class CallbackApiController extends Controller
             'to'      => $phone,
             'message' => $message
         ]);
+    }
+
+
+    public function generateEmailMessage($balance, $working){
+        return "<html>
+            <head>
+              <title></title>
+              <style>
+                html,
+                body{
+                  font-family: Arial, Helvetica, sans-serif;
+                }
+              </style>
+            </head>
+            <body>
+              <div style=3D'padding: 10px 16px; line-height: 1.6; font-size: 16px;'>
+                <p>Hi Patrick,</p>
+                <p>This is to inform you that your credit level on <b>Mpesa</b> is now lower than your threshold amount.</p>
+                <p><b>Current Balance - KES ".$balance."</b><br>
+                <b>Threshold Amount - KES ".LOW_UTILITY_BALANCE."</b><br>
+                <b>Working Account Balance: ".$working."</b></p>
+                <p>Regards,</p>
+                <p>Indexfand Team</p>
+              </div>
+            </body>
+          </html>";
     }
 }
