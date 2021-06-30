@@ -185,7 +185,10 @@ class HomeController
         $settings3['total_number'] = 0;
 
         if (class_exists($settings3['model'])) {
-            $settings3['total_number'] = $settings3['model']::when(isset($settings3['filter_field']), function ($query) use ($settings3) {
+            $settings3['total_number'] = $settings3['model']::whereHas('business', function ($query) use ($userBusinesses){
+                $query->whereIn('id', $userBusinesses);
+            })
+                ->when(isset($settings3['filter_field']), function ($query) use ($settings3) {
                 if (isset($settings3['filter_days'])) {
                     return $query->where(
                         $settings3['filter_field'],
@@ -299,7 +302,10 @@ class HomeController
         $settings6['total_number'] = 0;
 
         if (class_exists($settings6['model'])) {
-            $settings6['total_number'] = $settings6['model']::when(isset($settings6['filter_field']), function ($query) use ($settings6) {
+            $settings6['total_number'] = $settings6['model']::whereHas('business', function ($query) use ($userBusinesses){
+                $query->whereIn('id', $userBusinesses);
+            })
+            ->when(isset($settings6['filter_field']), function ($query) use ($settings6) {
                 if (isset($settings6['filter_days'])) {
                     return $query->where(
                         $settings6['filter_field'],
