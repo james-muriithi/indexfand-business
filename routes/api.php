@@ -45,6 +45,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.c2b.', 'namespace' => 'Api\V1\Payme
     Route::group(['middleware' => []], function (){
         Route::get('/', 'HomeApiController@index');
         Route::post('initiate', 'PaymentApiController@initiate');
+        Route::post('stk_push_query', 'PaymentApiController@STKPushQuery');
     });
 
     Route::post('c2b_response/{token}', 'PaymentApiController@callback')->name('callback');

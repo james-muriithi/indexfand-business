@@ -74,7 +74,7 @@ class PaymentApiController extends Controller
 
             try {
                 $code = $response['Body']['stkCallback']['ResultCode'];
-                $description = $response['Body']['stkCallback']['ResponseDescription'];
+                $description = $response['Body']['stkCallback']['ResultDesc'];
                 $requestId = $response['Body']['stkCallback']['CheckoutRequestID'];
 
                 $stkRequest = StkRequest::where('RequestId', $requestId)->first();
@@ -117,5 +117,10 @@ class PaymentApiController extends Controller
             }
 
         }
+    }
+
+    public function STKPushQuery()
+    {
+        
     }
 }
