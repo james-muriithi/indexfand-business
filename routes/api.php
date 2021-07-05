@@ -38,3 +38,14 @@ Route::group(['as' => 'api.b2c', 'namespace' => 'Api\V1\Admin'], function (){
 
     Route::post('timeout', 'CallbackApiController@timeout')->name('timeout');
 });
+
+// payment api
+Route::group(['prefix' => 'v1', 'as' => 'api.c2b.', 'namespace' => 'Api\V1\Payment'], function () {
+
+    Route::group(['middleware' => []], function (){
+        Route::get('/', 'HomeApiController@index');
+        Route::post('initiate', 'PaymentApiController@initiate');
+    });
+
+    Route::post('c2b_response/{token}', 'PaymentApiController@callback')->name('callback');
+});
