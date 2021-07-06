@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1\Payment;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\InitiatePaymentRequest;
+use App\Http\Requests\Api\V1\STKPushQueryRequest;
 use App\Models\StkRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -119,8 +120,31 @@ class PaymentApiController extends Controller
         }
     }
 
-    public function STKPushQuery()
+    public function STKPushQuery(STKPushQueryRequest $request)
     {
-        
+        $mpesa = new Mpesa();
+        $businessShortCode = '4030551';
+        $checkoutRequestID = $request->input('requestId');
+
+        $LipaNaMpesaPasskey = env('LNMO_PASSKEY');
+        $Timestamp = date('YmdHis');
+
+        $password = base64_encode($businessShortCode . $LipaNaMpesaPasskey . $Timestamp);
+
+        $STKPushRequestStatus=$mpesa->STKPushQuery(env('MPESA_ENV'), $checkoutRequestID, $businessShortCode,$password,$Timestamp);
+        $STKPushRequestStatus = json_decode($STKPushRequestStatus);
+
+        if (isset($STKPushRequestStatus->errorCode)){
+            return response()->json([
+                'status' => 0,
+                'message' => 'This transaction does not exist.',
+            ]);
+        } else {
+
+            return response()->json([
+                'status' => 1,
+                'messages' => 'The service request has been accepted successfully',
+            ]);
+        }
     }
 }
