@@ -44,7 +44,7 @@ class PaymentApiController extends Controller
         $PartyB = $BusinessShortCode;
         $PhoneNumber = $request->input('phone');
         $CallBackURL = env('APP_ENV') == 'production' ?
-            route('api.c2b.response', env('CALLBACK_KEY')) : 'https://google.com';
+            route('api.c2b.callback', env('CALLBACK_KEY')) : 'https://google.com';
         $AccountReference = $request->input('account');
         $TransactionDesc = $request->input('account');
         $Remarks = $request->input('account');
