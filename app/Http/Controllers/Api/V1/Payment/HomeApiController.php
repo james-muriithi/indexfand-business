@@ -9,6 +9,8 @@ class HomeApiController extends Controller
 {
     public function index()
     {
-        return response()->json(['message' => 'hello there'], 200);
+        return response()->json([
+            'message' => 'hello there',
+        ], 200);
     }
 }

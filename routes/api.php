@@ -41,8 +41,10 @@ Route::group(['as' => 'api.b2c', 'namespace' => 'Api\V1\Admin'], function (){
 
 // payment api
 Route::group(['prefix' => 'v1', 'as' => 'api.c2b.', 'namespace' => 'Api\V1\Payment'], function () {
+    // authentication
+    Route::post('auth/token', "ApiAuthenticate@index");
 
-    Route::group(['middleware' => []], function (){
+    Route::group(['middleware' => ['auth:sanctum']], function (){
         Route::get('/', 'HomeApiController@index');
         Route::post('initiate', 'PaymentApiController@initiate');
         Route::post('stk_push_query', 'PaymentApiController@STKPushQuery');

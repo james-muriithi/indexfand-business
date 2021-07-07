@@ -19,6 +19,17 @@ class PaymentApiController extends Controller
             'phone' => preg_replace('/^(0|\+?254)/', '254', $request->input('phone'))
         ]);
 
+        //check if api user owns the business account
+        $user = auth()->user();
+        $business = $user->userBusinesses()->where('tag', $request->input('account'))->first();
+
+        if (!$business){
+            return response()->json([
+                'status' => 0,
+                'message' => "Business does not exist"
+            ]);
+        }
+
         //initiate stk push
         $mpesa = new Mpesa();
         $BusinessShortCode = '4030551';
