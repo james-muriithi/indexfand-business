@@ -88,7 +88,7 @@ class B2cMpesa extends Mpesa
     }
 
     public static function generateSecurityCredential(){
-        $pubkey = self::curl_get_file_contents('https://developer.safaricom.co.ke/sites/default/files/cert/cert_prod/cert.cer');
+        $pubkey = self::curl_get_file_contents('https://indexfand.com/mp/ProductionCertificate.cer');
         $plaintext = env('INITIATOR_PASSWORD', '');
         openssl_public_encrypt($plaintext, $encrypted, $pubkey, OPENSSL_PKCS1_PADDING);
         return base64_encode($encrypted);
